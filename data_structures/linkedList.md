@@ -60,7 +60,7 @@ Basically, we create a BS variable and use it to run through all of the `link`s 
 Then, we change our new `link`'s `last` pointer to refer to the end of the chain, and we set the end of the chain's `next` pointer to point to our new end of the chain, which is `link`.
 ```cpp
 link->last = iterator;
-  iterator->next = link;
+iterator->next = link;
 ```
 Therefore, a linked list that was previously `1 2` and our value `3` become affixed to each other via our crappy appending and now the entire `chain` is `1 2 3`.  
 Now, we can read it in a very similar way.  
