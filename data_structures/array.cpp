@@ -79,7 +79,7 @@ void Array::pop(int indice) {
 
 void Array::erase(int value) {
   int i = 0;
-  for (chain* iterator = index(0); iterator != NULL; iterator = iterator->next)
+  for (chain* iterator = head; iterator != NULL && length > 1; iterator = iterator->next)
   {
     if (iterator->data == value)
     {
