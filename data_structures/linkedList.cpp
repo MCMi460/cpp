@@ -1,31 +1,34 @@
 #include <iostream>
 
-struct link {
+struct chain {
+  chain *last;
   int data;
-  link *next;
+  chain *next;
 };
 
-void push_back(link *back, int value)
+void push_back(chain *back, int value)
 {
-  link *last = new link();
-  last->data = value;
-  last->next = NULL;
-  link *iterator = back;
+  chain *link = new chain();
+  link->data = value;
+  link->next = NULL;
+  chain *iterator = back;
   while (iterator->next != NULL)
   {
     iterator = iterator->next;
   }
-  iterator->next = last;
+  link->last = iterator;
+  iterator->next = link;
 }
 
 int main(int argc, char *argv[])
 {
-  link *head = new link();
+  chain *head = new chain();
 
   // Values assignment
   head->data = 1;
 
   // Pointers
+  head->last = NULL;
   head->next = NULL;
 
   // Testing
@@ -34,11 +37,21 @@ int main(int argc, char *argv[])
     push_back(head, i); // Any point in the linked list can be entered as an argument here
   }
 
-  link *iterator = head;
+  // Iterate forwards using head
+  chain *iterator = head;
   while (iterator->next != NULL)
   {
     std::cout << iterator->data << std::endl;
     iterator = iterator->next;
+  }
+  std::cout << iterator->data << std::endl;
+
+  // And backwards, too!
+  // Iterate forwards using head
+  while (iterator->last != NULL)
+  {
+    std::cout << iterator->data << std::endl;
+    iterator = iterator->last;
   }
   std::cout << iterator->data << std::endl;
 
