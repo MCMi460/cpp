@@ -11,6 +11,7 @@ class Array {
     // Methods
     void push_back(int);
     void pop(int);
+    void erase(int);
     int* convert();
     chain* index(int);
 
@@ -74,6 +75,19 @@ void Array::pop(int indice) {
     head = iterator->next;
   }
   delete iterator;
+}
+
+void Array::erase(int value) {
+  int i = 0;
+  for (chain* iterator = head; iterator != NULL && length > 1; iterator = iterator->next)
+  {
+    if (iterator->data == value)
+    {
+      pop(i);
+      i--;
+    }
+    i++;
+  }
 }
 
 int* Array::convert() {
