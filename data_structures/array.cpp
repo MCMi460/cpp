@@ -37,8 +37,7 @@ void Array::push_back(int value) {
   link->data = value;
   // Iterate through list
   chain* iterator = head;
-  while (iterator->next != NULL)
-  {
+  while (iterator->next != NULL) {
     iterator = iterator->next;
   }
   link->last = iterator;
@@ -47,21 +46,18 @@ void Array::push_back(int value) {
 }
 
 chain* Array::index(int indice) {
-  if (indice < 0 || indice > length - 1)
-  {
+  if (indice < 0 || indice > length - 1) {
     throw std::out_of_range("index value is out of range");
   }
   chain* iterator = head;
-  for (int i = 0; i < indice; i++)
-  {
+  for (int i = 0; i < indice; i++) {
     iterator = iterator->next;
   }
   return iterator;
 }
 
 void Array::pop(int indice) {
-  if (length < 2)
-  {
+  if (length < 2) {
     throw std::length_error("cannot pop head");
   }
   chain* iterator = index(indice);
@@ -70,7 +66,7 @@ void Array::pop(int indice) {
     iterator->next->last = iterator->last;
   } else if (iterator->next == NULL) { // End of list
     iterator->last->next = NULL;
-  }  else { // Beginning of list
+  } else { // Beginning of list
     iterator->next->last = NULL;
     head = iterator->next;
   }
@@ -79,10 +75,8 @@ void Array::pop(int indice) {
 
 void Array::erase(int value) {
   int i = 0;
-  for (chain* iterator = head; iterator != NULL && length > 1; iterator = iterator->next)
-  {
-    if (iterator->data == value)
-    {
+  for (chain* iterator = head; iterator != NULL && length > 1; iterator = iterator->next) {
+    if (iterator->data == value) {
       pop(i);
       i--;
     }
@@ -93,30 +87,42 @@ void Array::erase(int value) {
 int* Array::convert() {
   int* list = new int[length];
   int i = 0;
-  for (chain* iterator = index(0); iterator != NULL; iterator = iterator->next)
-  {
+  for (chain* iterator = head; iterator != NULL; iterator = iterator->next) {
     list[i] = iterator->data;
     i++;
   }
   return list;
 }
 
-int main(int argc, const char* argv[]) {
-  Array my_list;
-
+/* Tests */
+void pushTest(Array *my_list, int times = 50) {
+  for (int i = 1; i < times; i++) {
+    my_list->push_back(i);
+  }
+}
+void linkListTest(Array my_list) {
   std::cout << "As a linked list:" << std::endl;
-  for (chain* iterator = my_list.index(0); iterator != NULL; iterator = iterator->next)
-  {
+  for (chain* iterator = my_list.index(0); iterator != NULL; iterator = iterator->next) {
     std::cout << iterator->data << std::endl;
   }
-
+}
+void arrayTest(Array my_list) {
   std::cout << "As an array:" << std::endl;
   int* array = my_list.convert();
-  for (int i = 0; i < sizeof(array)/sizeof(int*); i++)
-  {
+  int size = my_list.length;
+  for (int i = 0; i < size; i++) {
     std::cout << array[i] << std::endl;
   }
   delete[] array;
+}
+
+int main(int argc, const char* argv[]) {
+  Array my_list;
+
+  // Run tests
+  pushTest(&my_list);
+  linkListTest(my_list);
+  arrayTest(my_list);
 
   return 0;
 }
